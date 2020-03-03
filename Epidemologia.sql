@@ -1,3 +1,4 @@
+
 CREATE TABLE usuario (
 id_user INTEGER PRIMARY KEY AUTOINCREMENT,
 nome_usuario VARCHAR(255) NOT NULL,
@@ -17,7 +18,7 @@ nome_transmissor VARCHAR(255) NOT NULL
 CREATE TABLE doencas (
 id_doenca INTEGER PRIMARY KEY AUTOINCREMENT,
 nome_doenca VARCHAR(255) NOT NULL,
-ind_transmissao INTEGER NOT NULL,
+ind_transmissao INTEGER NOT NULL
 );
 
 CREATE TABLE transmite (
@@ -43,75 +44,75 @@ FOREIGN KEY (d_usuario) REFERENCES usuario(id_user)
 
 
 INSERT INTO transmissores
-(id_transmissores,nome_transmissor)
+(nome_transmissor)
 VALUES
-(DEFAULT,'Aedes Aegypti');
+('Aedes Aegypti');
 
 INSERT INTO transmissores
-(id_transmissores,nome_transmissor)
+(nome_transmissor)
 VALUES
-(DEFAULT,'Rato');
+('Rato');
 
 INSERT INTO doencas
-(id_doenca,nome_doenca,ind_transmissao)
+(nome_doenca,ind_transmissao)
 VALUES
-(DEFAULT,'Dengue','0');
+('Dengue','0');
 
 INSERT INTO doencas
-(id_doenca,nome_doenca,ind_transmissao)
+(nome_doenca,ind_transmissao)
 VALUES
-(DEFAULT,'Zika','0');
+('Zika','0');
 
 INSERT INTO doencas
-(id_doenca,nome_doenca,ind_transmissao)
+(nome_doenca,ind_transmissao)
 VALUES
-(DEFAULT,'chikungunya','0');
+('chikungunya','0');
 
 INSERT INTO doencas
-(id_doenca,nome_doenca,ind_transmissao)
+(nome_doenca,ind_transmissao)
 VALUES
-(DEFAULT,'Dorime','666');
+('Dorime','666');
 
 INSERT INTO transmite
-(id_transmite,transmissor,doenca)
+(transmissor,doenca)
 VALUES
-(DEFAULT,'1','1');
+('1','1');
 
 INSERT INTO transmite
-(id_transmite,transmissor,doenca)
+(transmissor,doenca)
 VALUES
-(DEFAULT,'1','2');
+('1','2');
 
 INSERT INTO transmite
-(id_transmite,transmissor,doenca)
+(transmissor,doenca)
 VALUES
-(DEFAULT,'1','3');
+('1','3');
 
 INSERT INTO transmite
-(id_transmite,transmissor,doenca)
+(transmissor,doenca)
 VALUES
-(DEFAULT,'2','4');
+('2','4');
 
 
 INSERT INTO usuario
-(id_user,nome_usuario,usuario,senha,email,datanasc,adm)
+(nome_usuario,usuario,senha,email,datanasc,adm)
 VALUES
-(DEFAULT,'Bruninho','Bubu','Manolin123','Bubu@labnet.nce.ufrj.br','1999-01-01',"0");
+('Bruninho','Bubu','Manolin123','Bubu@labnet.nce.ufrj.br','1999-01-01',"0");
 
 INSERT INTO denuncia
-(id_denuncia,endereco,resolvido,d_doenca,d_usuario,data_denuncia,denuncia_x,denuncia_y)
+(endereco,resolvido,d_doenca,d_usuario,data_denuncia,denuncia_x,denuncia_y)
 VALUES
-(DEFAULT,'Rua do Catete 123',"0",'1','1','2020-01-01','1.23','2.21');
+('Rua do Catete 123',"0",'1','1','2020-01-01','1.23','2.21');
 
 INSERT INTO denuncia
-(id_denuncia,endereco,resolvido,d_doenca,d_usuario,data_denuncia,denuncia_x,denuncia_y)
+(endereco,resolvido,d_doenca,d_usuario,data_denuncia,denuncia_x,denuncia_y)
 VALUES
-(DEFAULT,'Rua do Rosario 123',"0",'2','1','2020-01-01','2.23','3.21');
+('Rua do Rosario 123',"0",'2','1','2020-01-01','2.23','3.21');
 
 INSERT INTO denuncia
-(id_denuncia,endereco,resolvido,d_doenca,d_usuario,data_denuncia,denuncia_x,denuncia_y)
+(endereco,resolvido,d_doenca,d_usuario,data_denuncia,denuncia_x,denuncia_y)
 VALUES
-(DEFAULT,'Rua do Manolin 123',"0",'4','1','2020-01-01','5.23','3.21');
+('Rua do Manolin 123',"0",'4','1','2020-01-01','5.23','3.21');
 
 -- Retorna tudo de todos
 SELECT * FROM usuario;
