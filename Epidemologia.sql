@@ -42,6 +42,22 @@ FOREIGN KEY (d_doenca) REFERENCES doencas(id_doenca),
 FOREIGN KEY (d_usuario) REFERENCES usuario(id_user)
 );
 
+CREATE TABLE paciente (
+data_notificacao DATETIME NOT NULL,
+CartaoSUS INTEGER,
+cpf INTEGER,
+nomepaciente VARCHAR(255) NOT NULL,
+sexo VARCHAR(1),
+data_nascimento DATE NOT NULL,
+idadeanos INTEGER,
+nomemae VARCHAR(255) NOT NULL,
+nacionalidade VARCHAR(255),
+paisresidencia VARCHAR(255),
+unidadefederal VARCHAR(2),
+endereco VARCHAR(255),
+cep INTEGER,
+CONSTRAINT paciente_pk PRIMARY KEY (nomepaciente, data_nascimento, nomemae)
+);
 
 INSERT INTO transmissores
 (nome_transmissor)
@@ -93,6 +109,12 @@ INSERT INTO transmite
 VALUES
 ('2','4');
 
+INSERT INTO paciente
+(data_notificacao, nomepaciente, data_nascimento, nomemae)
+VALUES
+('2020-02-24 13:54', 'Manolin da Silva Chavier','1995-10-02','Mae do Manolin da Silva Chavier');
+
+
 
 INSERT INTO usuario
 (nome_usuario,usuario,senha,email,datanasc,adm)
@@ -119,6 +141,7 @@ SELECT * FROM usuario;
 SELECT * FROM transmissores;
 SELECT * FROM doencas;
 SELECT * FROM denuncia;
+SELECT * FROM paciente;
 
 -- retornar as doenças pra fazer a denuncia
 SELECT nome_transmissor FROM transmissores;
@@ -151,4 +174,8 @@ SELECT *
 FROM denuncia
 INNER JOIN doencas ON d_doenca = id_doenca
 WHERE nome_doenca = 'Dorime';
+
+
+
+
 
