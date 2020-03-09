@@ -44,8 +44,8 @@ FOREIGN KEY (d_usuario) REFERENCES usuario(id_user)
 
 CREATE TABLE paciente (
 data_notificacao DATETIME NOT NULL,
-CartaoSUS INTEGER,
-cpf INTEGER,
+CartaoSUS INTEGER NOT NULL,
+cpf INTEGER NOT NULL PRIMARY KEY,
 nomepaciente VARCHAR(255) NOT NULL,
 sexo VARCHAR(1),
 gestante INTEGER,
@@ -58,65 +58,23 @@ paisresidencia VARCHAR(255),
 unidadefederal VARCHAR(2),
 endereco VARCHAR(255),
 cep INTEGER,
-PRIMARY KEY (nomepaciente, data_nascimento, nomemae)
 );
 
 CREATE TABLE dadosdecasos (
 id_dadosdecasos INTEGER PRIMARY KEY AUTOINCREMENT,
-dadosdecasos_nomepaciente VARCHAR(255) NOT NULL,
-dadosdecasos_data_nascimento DATE NOT NULL,
-dadosdecasos_nomemae VARCHAR(255) NOT NULL,
+dadosdecasos_cpf INTEGER NOT NULL,
 data_primeirossintomas DATE,
-sintomas_febre INTEGER,
-sintomas_tosse INTEGER,
-sintomas_dor_de_garganta INTEGER,
-sintomas_dificuldade_de_respirar INTEGER,
-sintomas_mialgia INTEGER,
-sintomas_diarreia INTEGER,
-sintomas_nausea INTEGER,
-sintomas_cefaleia INTEGER,
-sintomas_coriza INTEGER,
-sintomas_irritabilidade INTEGER,
-sintomas_adinamia INTEGER,
-sintomas_producao_de_escarro INTEGER,
-sintomas_calafrios INTEGER,
-sintomas_congestao_nasal INTEGER,
-sintomas_congestao_conjuntiva INTEGER,
-sintomas_dificuldade_para_deglutir INTEGER,
-sintomas_manchas_vermelhas_pelo_corpo INTEGER,
-sintomas_ganglios_linfaticos_aumentados INTEGER,
-sintomas_batimento_das_asas_nasais INTEGER,
-sintomas_outros INTEGER,
-outrossintomas VARCHAR(255),
 sintomas_clinicos_febre INTEGER,
 temperatura_aferida INTEGER,
-sintomas_clinicos_exsudato_faringeo INTEGER,
-sintomas_clinicos_convulsao INTEGER,
-sintomas_clinicos_conjuntivite INTEGER,
-sintomas_clinicos_coma INTEGER,
-sintomas_clinicos_dispneia INTEGER,
-sintomas_clinicos_alteracao_de_ausculta_pulmonar INTEGER,
-sintomas_clinicos_alteracao_na_radiologia_de_torax INTEGER,
-sintomas_clinicos_outros INTEGER,
-outrossintomasclinicos VARCHAR(255),
-morbidades_previas_doenca_cardiovascular INTEGER,
-morbidades_previas_diabetes INTEGER,
-morbidades_previas_doenca_hepatica INTEGER,
-morbidades_previas_doenca_neurologica_cronica INTEGER,
-morbidades_previas_imunodeficiencia INTEGER,
-morbidades_previas_infeccao_pelo_hiv INTEGER,
-morbidades_previas_doenca_renal INTEGER,
-morbidades_previas_doenca_pulmonar_cronica INTEGER,
-morbidades_previas_neoplasia INTEGER,
 paciente_foi_hospitalizado INTEGER,
 nome_do_hospital_de_internacao VARCHAR(255),
 data_da_internacao_hospitalar DATE,
 data_da_alta_hospitalar DATE,
 data_do_isolamento DATE,
 paciente_foi_submetido_a_ventilacao_mecanica INTEGER,
-setuacao_de_saude_do_paciente INTEGER,
+situacao_de_saude_do_paciente INTEGER,
 foi_realizado_coleta_de_amostra_do_paciente INTEGER,
-FOREIGN KEY (dadosdecasos_nomepaciente, dadosdecasos_data_nascimento, dadosdecasos_nomemae) REFERENCES paciente(nomepaciente, data_nascimento, nomemae)
+FOREIGN KEY (dadosdecasos_cpf) REFERENCES paciente(cpf)
 );
 
 
@@ -160,9 +118,7 @@ FOREIGN KEY (viagens_nomepaciente, viagens_data_nascimento, viagens_nomemae) REF
 
 CREATE TABLE unidadenotificadora (
 id_unidadenotificadora INTEGER PRIMARY KEY AUTOINCREMENT,
-unidadenotificadora_nomepaciente VARCHAR(255) NOT NULL,
-unidadenotificadora_data_nascimento DATE NOT NULL,
-unidadenotificadora_nomemae VARCHAR(255) NOT NULL,
+unidadenotificadora_cpf INTEGER,
 origem_da_notificacao VARCHAR(255),
 estado_de_notificacao VARCHAR(2),
 municipio_de_notificacao VARCHAR(255),
@@ -170,7 +126,35 @@ nome_do_notificador VARCHAR(255),
 profissao_ou_ocupacao VARCHAR(255),
 telefone_de_contato_do_notificador VARCHAR(255),
 email_do_notificador VARCHAR(255),
-FOREIGN KEY (unidadenotificadora_nomepaciente, unidadenotificadora_data_nascimento, unidadenotificadora_nomemae) REFERENCES paciente(nomepaciente, data_nascimento, nomemae)
+FOREIGN KEY () REFERENCES paciente(cpf)
+);
+
+
+CREATE TABLE sintomas (
+id_sintomas INTEGER PRIMARY KEY AUTOINCREMENT,
+sintomas_cpf NOT NULL,
+sintomas_dadosdecasos NOT NULL,
+nome_sintoma VARCHAR(255) NOT NULL,
+FOREIGN KEY (sintomas_cpf) REFERENCES paciente(cpf),
+FOREIGN KEY (sintomas_dadosdecasos) REFERENCES dadosdecasos(id_dadosdecasos)
+);
+
+CREATE TABLE sintomasclinicos (
+id_sintomasclinicos INTEGER PRIMARY KEY AUTOINCREMENT,
+sintomasclinicos_cpf NOT NULL,
+sintomasclinicos_dadosdecasos NOT NULL,
+nome_sintoma VARCHAR(255) NOT NULL,
+FOREIGN KEY (sintomasclinicos_cpf) REFERENCES paciente(cpf),
+FOREIGN KEY (sintomasclinicos_dadosdecasos) REFERENCES dadosdecasos(id_dadosdecasos)
+);
+
+CREATE TABLE morbidadesprevias (
+id_morbidadesprevias INTEGER PRIMARY KEY AUTOINCREMENT,
+morbidadesprevias_cpf NOT NULL,
+morbidadesprevias_dadosdecasos NOT NULL,
+nome_sintoma VARCHAR(255) NOT NULL,
+FOREIGN KEY (morbidadesprevias_cpf) REFERENCES paciente(cpf),
+FOREIGN KEY (morbidadesprevias_dadosdecasos) REFERENCES dadosdecasos(id_dadosdecasos)
 );
 
 
