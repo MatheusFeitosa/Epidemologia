@@ -1,6 +1,7 @@
 CREATE TABLE paciente (
-cpf INTEGER NOT NULL PRIMARY KEY,
-cartao_sus INTEGER NOT NULL,
+id_paciente INTEGER PRIMARY KEY AUTOINCREMENT,
+cpf INTEGER,
+cartao_sus INTEGER,
 nomepaciente VARCHAR(255) NOT NULL,
 sexo INTEGER NOT NULL,
 data_nascimento DATE NOT NULL,
@@ -10,39 +11,40 @@ nacionalidade VARCHAR(255)
 
 CREATE TABLE denuncia (
 id_denuncia INTEGER PRIMARY KEY AUTOINCREMENT,
-denuncia_cpf INTEGER NOT NULL,
+denuncia_id_paciente INTEGER NOT NULL,
 data_notificacao DATETIME NOT NULL,
 gestante INTEGER,
 trimestre_gestacional INTEGER,
-idadeanos INTEGER,
-paisresidencia VARCHAR(255),
-unidadefederal VARCHAR(2),
-endereco VARCHAR(255),
-cep INTEGER,
-FOREIGN KEY (denuncia_cpf) REFERENCES paciente(cpf)
+idadeanos INTEGER NOT NULL,
+paisresidencia VARCHAR(255) NOT NULL,
+unidadefederal VARCHAR(2) NOT NULL,
+endereco VARCHAR(255) NOT NULL,
+cep INTEGER NOT NULL,
+classificacao_automatizada INTEGER,
+FOREIGN KEY (denuncia_id_paciente) REFERENCES paciente(id_paciente)
 );
 
 CREATE TABLE dadosdecasos (
 id_dadosdecasos INTEGER PRIMARY KEY AUTOINCREMENT,
-dadosdecasos_cpf INTEGER NOT NULL,
-data_primeirossintomas DATE,
+dadosdecasos_id_paciente INTEGER NOT NULL,
+data_primeirossintomas DATE NOT NULL,
 temperatura_aferida INTEGER,
-paciente_foi_hospitalizado INTEGER,
+paciente_foi_hospitalizado INTEGER NOT NULL,
 nome_do_hospital_de_internacao VARCHAR(255),
 data_da_internacao_hospitalar DATE,
 data_da_alta_hospitalar DATE,
 data_do_isolamento DATE,
 paciente_foi_submetido_a_ventilacao_mecanica INTEGER,
-situacao_de_saude_do_paciente VARCHAR(255),
-foi_realizado_coleta_de_amostra_do_paciente INTEGER,
-FOREIGN KEY (dadosdecasos_cpf) REFERENCES paciente(cpf)
+situacao_de_saude_do_paciente VARCHAR(255) NOT NULL,
+foi_realizado_coleta_de_amostra_do_paciente INTEGER NOT NULL,
+FOREIGN KEY (dadosdecasos_id_paciente) REFERENCES paciente(id_paciente)
 );
 
 
 CREATE TABLE viagens (
 id_viagens INTEGER PRIMARY KEY AUTOINCREMENT,
-viagens_cpf INTEGER NOT NULL,
-paciente_tem_historico_de_viagem_para_fora_do_brasil_14_dias INTEGER,
+viagens_id_paciente INTEGER NOT NULL,
+paciente_tem_historico_de_viagem_para_fora_do_brasil_14_dias INTEGER NOT NULL,
 foi_para_wuhan_na_china INTEGER,
 data_da_viagem_de_ida_para_wuhan DATE,
 data_da_viagem_de_volta_para_wuhan DATE,
@@ -52,32 +54,32 @@ data_da_viagem_de_ida_para_outro_local_transmissao DATE,
 data_da_viagem_de_volta_para_outro_local_transmissao DATE,
 descrito_do_historico_de_deslocamento_nos_14_dias VARCHAR(255),
 data_da_chegada_no_brasil DATE,
-o_paciente_teve_contato_proximo_com_uma_pessoa_que_seja_caso_suspeito INTEGER,
+o_paciente_teve_contato_proximo_com_uma_pessoa_que_seja_caso_suspeito INTEGER NOT NULL,
 se_teve_contato_com_outro_caso_suspeito VARCHAR(255),
 se_teve_contato_com_outro_caso_suspeito_especificar VARCHAR(255),
-o_paciente_teve_contato_proximo_com_uma_pessoa_que_seja_caso_confirmado INTEGER,
+o_paciente_teve_contato_proximo_com_uma_pessoa_que_seja_caso_confirmado INTEGER NOT NULL,
 se_teve_contato_com_outro_caso_confirmado VARCHAR(255),
 se_teve_contato_com_outro_caso_confirmado_especificar VARCHAR(255),
 nome_do_caso_fonte VARCHAR(255),
-esteve_em_alguma_unidade_de_saude_nos_14_dias_antes INTEGER,
+esteve_em_alguma_unidade_de_saude_nos_14_dias_antes INTEGER NOT NULL,
 se_frequentou_unidade_de_saude VARCHAR(255),
-ocupacao_do_caso_suspeito VARCHAR(255),
+ocupacao_do_caso_suspeito VARCHAR(255) NOT NULL,
 ocupacao_outros_especificar VARCHAR(255),
-teve_contato_proximo_com_animais INTEGER,
-FOREIGN KEY (viagens_cpf) REFERENCES paciente(cpf)
+teve_contato_proximo_com_animais INTEGER NOT NULL,
+FOREIGN KEY (viagens_id_paciente) REFERENCES paciente(id_paciente)
 );
 
 CREATE TABLE unidadenotificadora (
 id_unidadenotificadora INTEGER PRIMARY KEY AUTOINCREMENT,
-unidadenotificadora_cpf INTEGER,
-origem_da_notificacao VARCHAR(255),
-estado_de_notificacao VARCHAR(2),
-municipio_de_notificacao VARCHAR(255),
-nome_do_notificador VARCHAR(255),
-profissao_ou_ocupacao VARCHAR(255),
-telefone_de_contato_do_notificador VARCHAR(255),
-email_do_notificador VARCHAR(255),
-FOREIGN KEY (unidadenotificadora_cpf) REFERENCES paciente(cpf)
+unidadenotificadora_id_paciente INTEGERNOT NULL,
+origem_da_notificacao VARCHAR(255) NOT NULL,
+estado_de_notificacao VARCHAR(2) NOT NULL,
+municipio_de_notificacao VARCHAR(255) NOT NULL,
+nome_do_notificador VARCHAR(255) NOT NULL,
+profissao_ou_ocupacao VARCHAR(255) NOT NULL,
+telefone_de_contato_do_notificador VARCHAR(255) NOT NULL,
+email_do_notificador VARCHAR(255) NOT NULL,
+FOREIGN KEY (unidadenotificadora_id_paciente) REFERENCES paciente(id_paciente)
 );
 
 
